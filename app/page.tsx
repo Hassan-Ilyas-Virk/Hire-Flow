@@ -223,18 +223,36 @@ export default function Home() {
 
         {/* Input Section */}
         <section className="rainbow-border p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 mb-1">
-            <span className="inline-flex gap-1">
-              <span className="w-3 h-3 rounded-full bg-zlime" />
-              <span className="w-3 h-3 rounded-full bg-zcyan" />
-              <span className="w-3 h-3 rounded-full bg-zpink" />
-            </span>
-            <h2
-              className="text-sm font-bold uppercase tracking-[0.15em] text-zwhite"
-              style={{ fontFamily: "var(--font-syne), system-ui, sans-serif" }}
+          <div className="flex items-center justify-between gap-3 mb-1">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex gap-1">
+                <span className="w-3 h-3 rounded-full bg-zlime" />
+                <span className="w-3 h-3 rounded-full bg-zcyan" />
+                <span className="w-3 h-3 rounded-full bg-zpink" />
+              </span>
+              <h2
+                className="text-sm font-bold uppercase tracking-[0.15em] text-zwhite"
+                style={{ fontFamily: "var(--font-syne), system-ui, sans-serif" }}
+              >
+                Drop your job posts here
+              </h2>
+            </div>
+            <button
+              onClick={async () => {
+                try {
+                  const clipText = await navigator.clipboard.readText();
+                  setText(clipText);
+                } catch {
+                  // clipboard access denied or unavailable
+                }
+              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-mono uppercase tracking-wider text-zgray-text border border-zgray-light hover:border-zlime hover:text-zlime transition-colors"
             >
-              Drop your job posts here
-            </h2>
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              paste
+            </button>
           </div>
           <textarea
             value={text}
@@ -316,10 +334,22 @@ export default function Home() {
               >
                 {jobs.length} draft{jobs.length > 1 ? "s" : ""} ready
               </h2>
-              <span className="text-[11px] font-mono text-zgray-text uppercase tracking-widest flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-zgreen animate-pulse" />
-                review // edit // send
-              </span>
+              <div className="flex items-center gap-4">
+                <span className="text-[11px] font-mono text-zgray-text uppercase tracking-widest flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-zgreen animate-pulse" />
+                  review // edit // send
+                </span>
+                <button
+                  onClick={handleGenerate}
+                  disabled={loading}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-mono uppercase tracking-wider text-zgray-text border border-zgray-light hover:border-zcyan hover:text-zcyan transition-colors"
+                >
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  retry
+                </button>
+              </div>
             </div>
 
             {jobs.map((job, i) => (
@@ -441,17 +471,28 @@ export default function Home() {
                   />
                 </div>
 
-                {/* Send Button */}
-                <div className="flex justify-end">
+                {/* Send / Retry Button */}
+                <div className="flex justify-end gap-3">
+                  {job.status === "error" && (
+                    <button
+                      onClick={() => handleSend(i)}
+                      className="flex items-center gap-2 px-7 py-2.5 text-sm font-bold rounded-xl border-2 border-zorange text-zorange hover:bg-zorange/10 transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      retry
+                    </button>
+                  )}
                   <button
                     onClick={() => handleSend(i)}
                     disabled={
-                      job.status === "sending" || job.status === "sent"
+                      job.status === "sending" || job.status === "sent" || job.status === "error"
                     }
                     className="btn-send px-7 py-2.5 text-sm"
                   >
                     <span className="flex items-center gap-2">
-                      {job.status !== "sending" && job.status !== "sent" && (
+                      {job.status !== "sending" && job.status !== "sent" && job.status !== "error" && (
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -471,7 +512,7 @@ export default function Home() {
                         : job.status === "sent"
                           ? "sent!"
                           : job.status === "error"
-                            ? "retry"
+                            ? "send it"
                             : "send it"}
                     </span>
                   </button>
