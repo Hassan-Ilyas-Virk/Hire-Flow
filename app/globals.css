@@ -1,26 +1,445 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-syne);
+  --font-body: var(--font-space);
+  --font-mono: var(--font-mono);
+  --color-zblack: #050505;
+  --color-zwhite: #f5f0eb;
+  --color-zlime: #d4ff2b;
+  --color-zpink: #ff3cac;
+  --color-zpurple: #bf5af2;
+  --color-zblue: #5e5ce6;
+  --color-zorange: #ff6b35;
+  --color-zcyan: #00f0ff;
+  --color-zyellow: #ffe14d;
+  --color-zred: #ff453a;
+  --color-zgreen: #30d158;
+  --color-zgray: #111;
+  --color-zgray-light: #222;
+  --color-zgray-mid: #333;
+  --color-zgray-text: #777;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-zpink) var(--color-zgray);
+}
+
+::selection {
+  background: var(--color-zpink);
+  color: var(--color-zblack);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-zblack);
+  color: var(--color-zwhite);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* Grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Colorful blobs — more of them, more vivid */
+.blob-1 {
+  position: fixed;
+  top: -10%;
+  right: -5%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(212, 255, 43, 0.12) 0%, transparent 60%);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: morph 15s ease-in-out infinite alternate;
+}
+
+.blob-2 {
+  position: fixed;
+  bottom: -15%;
+  left: -10%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(255, 60, 172, 0.1) 0%, transparent 60%);
+  border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: morph 18s ease-in-out infinite alternate-reverse;
+}
+
+.blob-3 {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.07) 0%, transparent 60%);
+  border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%;
+  pointer-events: none;
+  z-index: 0;
+  animation: morph 22s ease-in-out infinite alternate;
+}
+
+.blob-4 {
+  position: fixed;
+  top: 10%;
+  left: 20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(191, 90, 242, 0.08) 0%, transparent 60%);
+  border-radius: 70% 30% 50% 50% / 30% 70% 30% 70%;
+  pointer-events: none;
+  z-index: 0;
+  animation: morph 25s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes morph {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: rotate(0deg); }
+  50% { border-radius: 60% 40% 30% 70% / 50% 40% 70% 30%; transform: rotate(5deg); }
+  100% { border-radius: 30% 70% 50% 50% / 60% 30% 70% 40%; transform: rotate(-3deg); }
+}
+
+/* Rainbow gradient border trick */
+.rainbow-border {
+  position: relative;
+  background: var(--color-zgray);
+  border-radius: 24px;
+  border: none;
+  overflow: visible;
+}
+
+.rainbow-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: conic-gradient(
+    from 0deg,
+    var(--color-zlime),
+    var(--color-zcyan),
+    var(--color-zblue),
+    var(--color-zpurple),
+    var(--color-zpink),
+    var(--color-zorange),
+    var(--color-zyellow),
+    var(--color-zlime)
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.rainbow-border:hover::before {
+  opacity: 1;
+}
+
+/* Chunky card with colored left accent */
+.chunky-card {
+  background: var(--color-zgray);
+  border: 2px solid var(--color-zgray-light);
+  border-radius: 24px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chunky-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-zlime), var(--color-zcyan), var(--color-zpink));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.chunky-card:hover {
+  border-color: var(--color-zgray-mid);
+  transform: translateY(-3px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 60px rgba(212, 255, 43, 0.04);
+}
+
+.chunky-card:hover::after {
+  opacity: 1;
+}
+
+/* Card color variants */
+.card-lime { border-left: 4px solid var(--color-zlime); }
+.card-pink { border-left: 4px solid var(--color-zpink); }
+.card-cyan { border-left: 4px solid var(--color-zcyan); }
+.card-purple { border-left: 4px solid var(--color-zpurple); }
+.card-orange { border-left: 4px solid var(--color-zorange); }
+.card-yellow { border-left: 4px solid var(--color-zyellow); }
+
+/* Thick input */
+.thicc-input {
+  background: rgba(5, 5, 5, 0.8);
+  border: 2px solid var(--color-zgray-light);
+  border-radius: 16px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  transition: all 0.25s ease;
+}
+
+.thicc-input:focus {
+  border-color: var(--color-zpurple);
+  box-shadow: 0 0 0 4px rgba(191, 90, 242, 0.12), 0 0 30px rgba(191, 90, 242, 0.06);
+  outline: none;
+}
+
+.thicc-input::placeholder {
+  color: #444;
+  font-style: italic;
+}
+
+/* Gen-Z primary button — gradient */
+.btn-genz {
+  background: linear-gradient(135deg, var(--color-zlime), var(--color-zcyan));
+  color: var(--color-zblack);
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 16px;
+  border: none;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-genz::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--color-zpink), var(--color-zpurple));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-genz:hover {
+  transform: scale(1.03) rotate(-0.5deg);
+  box-shadow: 0 0 40px rgba(212, 255, 43, 0.2), 0 0 80px rgba(0, 240, 255, 0.1);
+}
+
+.btn-genz:hover::before {
+  opacity: 1;
+}
+
+.btn-genz:active {
+  transform: scale(0.97);
+}
+
+.btn-genz:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-genz:disabled::before {
+  opacity: 0;
+}
+
+.btn-genz span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Send button — neon outline */
+.btn-send {
+  background: transparent;
+  color: var(--color-zcyan);
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 16px;
+  border: 2.5px solid var(--color-zcyan);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-send::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--color-zcyan), var(--color-zgreen));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-send:hover {
+  color: var(--color-zblack);
+  border-color: transparent;
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
+  transform: scale(1.03);
+}
+
+.btn-send:hover::before {
+  opacity: 1;
+}
+
+.btn-send:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-send:disabled::before {
+  opacity: 0;
+}
+
+.btn-send span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tags / pills — more vivid */
+.pill-sent {
+  background: linear-gradient(135deg, rgba(48, 209, 88, 0.15), rgba(212, 255, 43, 0.1));
+  border: 2px solid var(--color-zgreen);
+  color: var(--color-zgreen);
+  font-weight: 700;
+}
+
+.pill-error {
+  background: linear-gradient(135deg, rgba(255, 69, 58, 0.15), rgba(255, 60, 172, 0.1));
+  border: 2px solid var(--color-zred);
+  color: var(--color-zred);
+  font-weight: 700;
+}
+
+.pill-sending {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(94, 92, 230, 0.1));
+  border: 2px solid var(--color-zcyan);
+  color: var(--color-zcyan);
+  font-weight: 700;
+}
+
+/* Number badge colors */
+.num-lime { background: var(--color-zlime); color: var(--color-zblack); }
+.num-pink { background: var(--color-zpink); color: var(--color-zblack); }
+.num-cyan { background: var(--color-zcyan); color: var(--color-zblack); }
+.num-purple { background: var(--color-zpurple); color: white; }
+.num-orange { background: var(--color-zorange); color: var(--color-zblack); }
+.num-yellow { background: var(--color-zyellow); color: var(--color-zblack); }
+
+/* Skeleton — colorful shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.genz-skeleton {
+  background: linear-gradient(90deg, #111 25%, #222 40%, #1a1a1a 55%, #111 75%);
+  background-size: 300% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+  border-radius: 12px;
+}
+
+/* Pop-in entrance with bounce */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(24px) rotate(-1deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotate(0deg);
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+/* Label style */
+.label-tag {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #555;
+}
+
+/* Colorful underline for headings */
+.gradient-underline {
+  background-image: linear-gradient(90deg, var(--color-zlime), var(--color-zcyan), var(--color-zpink), var(--color-zpurple));
+  background-size: 100% 3px;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  padding-bottom: 6px;
+}
+
+/* Floating color dots decoration */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.float-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Sticker tags */
+.sticker-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+}
+
+/* Rotating gradient border on input section */
+@keyframes rotate-gradient {
+  from { --angle: 0deg; }
+  to { --angle: 360deg; }
+}
+
+/* Color cycle for marquee separators */
+@keyframes color-cycle {
+  0% { color: var(--color-zlime); }
+  16% { color: var(--color-zcyan); }
+  33% { color: var(--color-zblue); }
+  50% { color: var(--color-zpurple); }
+  66% { color: var(--color-zpink); }
+  83% { color: var(--color-zorange); }
+  100% { color: var(--color-zlime); }
+}
+
+.color-cycle {
+  animation: color-cycle 6s linear infinite;
 }
