@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export async function POST(req: Request) {
   const { email, company_name, role, cover_letter } = await req.json();
@@ -17,9 +19,7 @@ export async function POST(req: Request) {
     },
   });
 
-  const resumeUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? "https://" + process.env.VERCEL_URL}/resume.pdf`;
-  const res = await fetch(resumeUrl);
-  const resumeBuffer = Buffer.from(await res.arrayBuffer());
+  const resumeBuffer = readFileSync(join(process.cwd(), "public", "resume.pdf"));
 
   await transporter.sendMail({
     from: process.env.SMTP_USER,
