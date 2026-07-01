@@ -28,8 +28,13 @@ IMPORTANT RULES for the cover letter:
 - End with: "Looking forward to connecting!\\n\\nBest,\\nHassan Ilyas"
 - Use \\n\\n between paragraphs for clean formatting.
 
+SUBJECT LINE RULES:
+- Check if the job posting specifies a required email subject format (e.g., "Subject: [Job Code] - [Name]", "mention job ID in subject", "use subject line: ...").
+- If a specific format is required, follow it exactly, filling in the candidate's details (name: Hassan Ilyas) and any job codes/IDs mentioned.
+- If no specific format is required, use: "Application for [Role] at [Company Name]"
+
 You MUST respond with ONLY valid JSON in this exact format, no other text:
-{"jobs":[{"email":"...","company_name":"...","role":"...","cover_letter":"..."}]}`;
+{"jobs":[{"email":"...","company_name":"...","role":"...","subject":"...","cover_letter":"..."}]}`;
 
 export async function POST(req: Request) {
   const { text } = await req.json();

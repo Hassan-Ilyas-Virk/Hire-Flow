@@ -6,6 +6,7 @@ interface Job {
   email: string;
   company_name: string;
   role: string;
+  subject: string;
   cover_letter: string;
   status: "draft" | "sending" | "sent" | "error";
 }
@@ -99,6 +100,7 @@ export default function Home() {
         setJobs(
           data.jobs.map((j: Omit<Job, "status">) => ({
             ...j,
+            subject: j.subject || `Application for ${j.role} at ${j.company_name}`,
             status: "draft",
           }))
         );
@@ -127,6 +129,7 @@ export default function Home() {
           email: job.email,
           company_name: job.company_name,
           role: job.role,
+          subject: job.subject,
           cover_letter: job.cover_letter,
         }),
       });
@@ -454,6 +457,22 @@ export default function Home() {
                     type="email"
                     value={job.email}
                     onChange={(e) => updateJob(i, "email", e.target.value)}
+                    className="thicc-input w-full px-4 py-2.5 text-sm text-zwhite"
+                  />
+                </div>
+
+                {/* Subject Field */}
+                <div className="space-y-2">
+                  <label className="label-tag">
+                    subject
+                    <span className="ml-2 text-[10px] text-zgray-text font-normal tracking-normal normal-case">
+                      auto-detected from job posting
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    value={job.subject}
+                    onChange={(e) => updateJob(i, "subject", e.target.value)}
                     className="thicc-input w-full px-4 py-2.5 text-sm text-zwhite"
                   />
                 </div>

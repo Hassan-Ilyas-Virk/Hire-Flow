@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 
 export async function POST(req: Request) {
-  const { email, company_name, role, cover_letter } = await req.json();
+  const { email, company_name, role, subject, cover_letter } = await req.json();
 
   if (!email || !cover_letter) {
     return Response.json({ error: "Missing required fields" }, { status: 400 });
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
   await transporter.sendMail({
     from: process.env.SMTP_USER,
     to: email,
-    subject: `Application for ${role} at ${company_name}`,
+    subject: subject || `Application for ${role} at ${company_name}`,
     text: cover_letter,
     attachments: [
       {
