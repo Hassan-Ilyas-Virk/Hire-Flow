@@ -37,17 +37,31 @@ You MUST respond with ONLY valid JSON in this exact format, no other text:
 {"jobs":[{"email":"...","company_name":"...","role":"...","subject":"...","cover_letter":"..."}]}`;
 
 export async function POST(req: Request) {
+  if (!process.env.GROQ_API_KEY) {
+    return Response.json(
+      { error: "GROQ_API_KEY is not set on the server." },
+      { status: 500 }
+    );
+  }
+
   const { text } = await req.json();
 
   if (!text || typeof text !== "string") {
     return Response.json({ error: "Missing or invalid text field" }, { status: 400 });
   }
 
-  const { text: response } = await generateText({
-    model: groq("llama-3.3-70b-versatile"),
-    system: SYSTEM_PROMPT,
-    prompt: text,
-  });
+  let response: string;
+  try {
+    const result = await generateText({
+      model: groq("openai/gpt-oss-120b"),
+      system: SYSTEM_PROMPT,
+      prompt: text,
+    });
+    response = result.text;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return Response.json({ error: `AI request failed: ${message}` }, { status: 502 });
+  }
 
   const jsonMatch = response.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
@@ -57,6 +71,14 @@ export async function POST(req: Request) {
   const sanitized = jsonMatch[0].replace(/[\x00-\x1F\x7F]/g, (ch) =>
     ch === "\n" || ch === "\t" ? ch : ""
   );
-  const parsed = JSON.parse(sanitized);
-  return Response.json(parsed);
+
+  try {
+    const parsed = JSON.parse(sanitized);
+    return Response.json(parsed);
+  } catch {
+    return Response.json(
+      { error: "AI returned malformed JSON. Try again." },
+      { status: 502 }
+    );
+  }
 }

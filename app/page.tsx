@@ -96,6 +96,10 @@ export default function Home() {
         body: JSON.stringify({ text }),
       });
       const data = await res.json();
+      if (!res.ok || data.error) {
+        alert(data.error || `Request failed (${res.status})`);
+        return;
+      }
       if (data.jobs) {
         setJobs(
           data.jobs.map((j: Omit<Job, "status">) => ({
@@ -105,8 +109,8 @@ export default function Home() {
           }))
         );
       }
-    } catch {
-      alert("Failed to generate drafts.");
+    } catch (err) {
+      alert(err instanceof Error ? `Failed to generate drafts: ${err.message}` : "Failed to generate drafts.");
     } finally {
       setLoading(false);
     }
