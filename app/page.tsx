@@ -57,10 +57,15 @@ export default function Home() {
         <div className="blob-2" aria-hidden="true" />
         <div className="chunky-card card-lime p-8 sm:p-10 max-w-sm w-full space-y-6 text-center">
           <h1
-            className="text-4xl font-black tracking-tighter text-zblack"
-            style={{ fontFamily: "var(--font-syne), system-ui, sans-serif", textShadow: "3px 3px 0px var(--color-zyellow), 6px 6px 0px var(--color-zblack)" }}
+            className="text-4xl font-extrabold tracking-tighter"
+            style={{ fontFamily: "var(--font-syne), system-ui, sans-serif" }}
           >
-            HireFlow
+            <span className="bg-gradient-to-r from-zlime via-zcyan to-zpurple bg-clip-text text-transparent">
+              Hire
+            </span>
+            <span className="bg-gradient-to-r from-zpink via-zorange to-zyellow bg-clip-text text-transparent">
+              Flow
+            </span>
           </h1>
           <p className="text-zgray-text text-sm font-mono">enter pin to continue</p>
           <input
@@ -155,7 +160,7 @@ export default function Home() {
       <div className="blob-4" aria-hidden="true" />
 
       {/* Marquee Banner */}
-      <div className="w-full overflow-hidden border-b-4 border-zblack py-3 bg-zyellow">
+      <div className="w-full overflow-hidden border-b-2 border-zgray-light py-3 bg-zgray/80 backdrop-blur-sm">
         <div className="marquee-track">
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
             <span
@@ -173,10 +178,15 @@ export default function Home() {
         <header className="space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-5">
             <h1
-              className="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-none text-zblack"
-              style={{ fontFamily: "var(--font-syne), system-ui, sans-serif", textShadow: "4px 4px 0px var(--color-zyellow), 8px 8px 0px var(--color-zblack)" }}
+              className="text-5xl sm:text-6xl lg:text-8xl font-extrabold tracking-tighter leading-none"
+              style={{ fontFamily: "var(--font-syne), system-ui, sans-serif" }}
             >
-              HireFlow
+              <span className="bg-gradient-to-r from-zlime via-zcyan to-zpurple bg-clip-text text-transparent">
+                Hire
+              </span>
+              <span className="bg-gradient-to-r from-zpink via-zorange to-zyellow bg-clip-text text-transparent">
+                Flow
+              </span>
             </h1>
             <div className="flex items-center gap-2 pb-2">
               <span className="float-dot bg-zlime" />
@@ -188,9 +198,9 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="text-zblack text-sm sm:text-base max-w-xl leading-relaxed font-bold">
+          <p className="text-zgray-text text-sm sm:text-base max-w-xl leading-relaxed">
             paste job postings. get ai cover letters. send applications.{" "}
-            <span className="bg-zyellow px-2 py-0.5 border-2 border-zblack shadow-[2px_2px_0px_var(--color-zblack)] text-black font-black">
+            <span className="bg-gradient-to-r from-zpink to-zorange bg-clip-text text-transparent font-bold">
               that&apos;s literally it.
             </span>
           </p>
@@ -449,8 +459,15 @@ export default function Home() {
                   )}
                 </div>
 
-                {/* Solid thick divider */}
-                <div className="h-1.5 bg-zblack" />
+                {/* Colorful divider */}
+                <div
+                  className="h-0.5 rounded-full"
+                  style={{
+                    background: `linear-gradient(90deg, ${
+                      ["#d4ff2b", "#ff3cac", "#00f0ff", "#bf5af2", "#ff6b35", "#ffe14d"][i % 6]
+                    }, transparent)`,
+                  }}
+                />
 
                 {/* Email Field */}
                 <div className="space-y-2">
@@ -554,10 +571,10 @@ export default function Home() {
               <span className="float-dot w-4 h-4 bg-zorange" style={{ animationDelay: "1.2s" }} />
             </div>
             <p
-              className="text-zblack font-bold text-sm max-w-sm mx-auto leading-relaxed"
+              className="text-zgray-text text-sm max-w-sm mx-auto leading-relaxed"
             >
               paste some job descriptions above and hit{" "}
-              <span className="bg-zyellow border-2 border-zblack text-black px-2 py-0.5 shadow-[2px_2px_0px_var(--color-zblack)] font-black uppercase text-xs tracking-wider">
+              <span className="bg-gradient-to-r from-zlime to-zcyan bg-clip-text text-transparent font-bold uppercase text-xs tracking-wider">
                 generate drafts
               </span>{" "}
               to let ai cook
@@ -568,8 +585,8 @@ export default function Home() {
         {/* Footer */}
         <footer className="pt-6 pb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="h-1.5 w-12 bg-zblack" />
-            <p className="text-[11px] font-mono text-zblack font-bold uppercase tracking-widest">
+            <div className="h-0.5 w-12 bg-gradient-to-r from-zlime via-zpink to-zpurple rounded-full" />
+            <p className="text-[11px] font-mono text-zgray-text uppercase tracking-widest">
               hireflow // built by hassan ilyas
             </p>
           </div>
