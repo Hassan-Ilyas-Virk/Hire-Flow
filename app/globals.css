@@ -5,10 +5,10 @@
   --font-body: var(--font-space);
   --font-mono: var(--font-mono);
   
-  /* Brutalist Palette */
-  --color-zblack: #000000;
-  --color-zwhite: #ffffff;
-  --color-zbg: #F4F0E6; /* Off-white/beige background */
+  /* Brutalist Palette - Dark Theme */
+  --color-zblack: #FFFFFF;
+  --color-zwhite: #1C1C1C;
+  --color-zbg: #0A0A0A; /* Very dark background */
   
   /* Primary Brutalist Colors */
   --color-zred: #FF3B30;
@@ -111,7 +111,7 @@ body {
 /* Gen-Z primary button -> Brutalist Solid Button */
 .btn-genz {
   background: var(--color-zyellow);
-  color: var(--color-zblack);
+  color: #000000;
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 800;
   text-transform: uppercase;
@@ -202,18 +202,18 @@ body {
 .pill-sending {
   background: var(--color-zyellow);
   border: 3px solid var(--color-zblack);
-  color: var(--color-zblack);
+  color: #000;
   font-weight: 800;
   box-shadow: 3px 3px 0px var(--color-zblack);
 }
 
 /* Number badge colors */
-.num-lime { background: var(--color-zyellow); color: var(--color-zblack); border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
-.num-pink { background: var(--color-zpink); color: var(--color-zblack); border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
+.num-lime { background: var(--color-zyellow); color: #000; border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
+.num-pink { background: var(--color-zpink); color: #000; border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
 .num-cyan { background: var(--color-zblue); color: var(--color-zwhite); border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
 .num-purple { background: var(--color-zpurple); color: var(--color-zwhite); border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
-.num-orange { background: var(--color-zorange); color: var(--color-zblack); border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
-.num-yellow { background: var(--color-zgreen); color: var(--color-zblack); border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
+.num-orange { background: var(--color-zorange); color: #000; border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
+.num-yellow { background: var(--color-zgreen); color: #000; border: 3px solid var(--color-zblack); box-shadow: 3px 3px 0px var(--color-zblack); }
 
 /* Skeleton — blocky loading state */
 @keyframes brutal-shimmer {
@@ -264,7 +264,7 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-zblack);
+  color: #000;
   background: var(--color-zyellow);
   padding: 4px 8px;
   border: 2px solid var(--color-zblack);
@@ -302,9 +302,9 @@ body {
   letter-spacing: 0.1em;
   box-shadow: 4px 4px 0px var(--color-zblack);
   border: 3px solid var(--color-zblack) !important;
-  color: var(--color-zblack) !important;
+  color: var(--color-zwhite) !important;
 }
 
 .color-cycle {
-  color: var(--color-zblack);
+  color: #000;
 }

@@ -190,7 +190,7 @@ export default function Home() {
 
           <p className="text-zblack text-sm sm:text-base max-w-xl leading-relaxed font-bold">
             paste job postings. get ai cover letters. send applications.{" "}
-            <span className="bg-zyellow px-2 py-0.5 border-2 border-zblack shadow-[2px_2px_0px_#000] text-zblack font-black">
+            <span className="bg-zyellow px-2 py-0.5 border-2 border-zblack shadow-[2px_2px_0px_var(--color-zblack)] text-black font-black">
               that&apos;s literally it.
             </span>
           </p>
@@ -557,7 +557,7 @@ export default function Home() {
               className="text-zblack font-bold text-sm max-w-sm mx-auto leading-relaxed"
             >
               paste some job descriptions above and hit{" "}
-              <span className="bg-zyellow border-2 border-zblack text-zblack px-2 py-0.5 shadow-[2px_2px_0px_#000] font-black uppercase text-xs tracking-wider">
+              <span className="bg-zyellow border-2 border-zblack text-black px-2 py-0.5 shadow-[2px_2px_0px_var(--color-zblack)] font-black uppercase text-xs tracking-wider">
                 generate drafts
               </span>{" "}
               to let ai cook
