@@ -1,6 +1,8 @@
 import { createGroq } from "@ai-sdk/groq";
 import { generateText } from "ai";
 
+export const dynamic = 'force-dynamic';
+
 const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
 
 const SYSTEM_PROMPT = `You are an expert career agent. The candidate is Hassan Ilyas, a fresh graduate from FAST NUCES (National University of Computer and Emerging Sciences) with a degree in Software Engineering. He is also a freelance developer based in Rawalpindi, Pakistan. NEVER refer to him as a "final year student" or "student" — he is a fresh graduate. He has a strong dual background in both full-stack web development and AI/ML.
