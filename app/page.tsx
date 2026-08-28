@@ -37,6 +37,7 @@ export default function Home() {
   const [text, setText] = useState("");
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
+  const [customResume, setCustomResume] = useState<File | null>(null);
 
   useEffect(() => {
     if (localStorage.getItem("hireflow_auth") === "1") setAuthed(true);
@@ -126,16 +127,19 @@ export default function Home() {
     const job = jobs[index];
     updateJob(index, "status", "sending");
     try {
+      const formData = new FormData();
+      formData.append("email", job.email);
+      formData.append("company_name", job.company_name);
+      formData.append("role", job.role);
+      formData.append("subject", job.subject);
+      formData.append("cover_letter", job.cover_letter);
+      if (customResume) {
+        formData.append("resume", customResume);
+      }
+
       const res = await fetch("/api/send-email", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: job.email,
-          company_name: job.company_name,
-          role: job.role,
-          subject: job.subject,
-          cover_letter: job.cover_letter,
-        }),
+        body: formData,
       });
       if (res.ok) {
         updateJob(index, "status", "sent");
@@ -261,6 +265,17 @@ export default function Home() {
               paste
             </button>
           </div>
+          
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center py-2">
+            <label className="label-tag shrink-0">custom resume (pdf)</label>
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={(e) => setCustomResume(e.target.files?.[0] || null)}
+              className="text-[11px] font-mono text-zgray-text file:cursor-pointer file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:uppercase file:tracking-wider file:bg-zgray-light file:text-zwhite hover:file:bg-zcyan hover:file:text-zbg transition-colors w-full"
+            />
+          </div>
+
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}

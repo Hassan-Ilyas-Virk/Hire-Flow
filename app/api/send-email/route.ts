@@ -3,7 +3,13 @@ import { readFileSync } from "fs";
 import { join } from "path";
 
 export async function POST(req: Request) {
-  const { email, company_name, role, subject, cover_letter } = await req.json();
+  const formData = await req.formData();
+  const email = formData.get("email") as string | null;
+  const company_name = formData.get("company_name") as string | null;
+  const role = formData.get("role") as string | null;
+  const subject = formData.get("subject") as string | null;
+  const cover_letter = formData.get("cover_letter") as string | null;
+  const resumeFile = formData.get("resume") as File | null;
 
   if (!email || !cover_letter) {
     return Response.json({ error: "Missing required fields" }, { status: 400 });
@@ -19,7 +25,16 @@ export async function POST(req: Request) {
     },
   });
 
-  const resumeBuffer = readFileSync(join(process.cwd(), "public", "resume.pdf"));
+  let resumeBuffer: Buffer;
+  let filename = "resume.pdf";
+
+  if (resumeFile) {
+    const arrayBuffer = await resumeFile.arrayBuffer();
+    resumeBuffer = Buffer.from(arrayBuffer);
+    filename = resumeFile.name;
+  } else {
+    resumeBuffer = readFileSync(join(process.cwd(), "public", "resume.pdf"));
+  }
 
   await transporter.sendMail({
     from: process.env.SMTP_USER,
@@ -28,7 +43,7 @@ export async function POST(req: Request) {
     text: cover_letter,
     attachments: [
       {
-        filename: "resume.pdf",
+        filename: filename,
         content: resumeBuffer,
         contentType: "application/pdf",
       },
