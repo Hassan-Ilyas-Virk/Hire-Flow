@@ -55,7 +55,7 @@ export async function POST(req: Request) {
   let response: string;
   try {
     const result = await generateText({
-      model: groq("llama-3.1-8b-instant"),
+      model: groq("openai/gpt-oss-120b"),
       system: SYSTEM_PROMPT,
       prompt: text,
     });

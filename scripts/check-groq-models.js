@@ -50,7 +50,7 @@ const req = https.request(options, (res) => {
         parsed.data.sort((a, b) => a.id.localeCompare(b.id)).forEach(model => {
           console.log(`- ${model.id} (Owner: ${model.owned_by})`);
         });
-        console.log("\nRecommended model for general tasks: llama-3.1-8b-instant");
+        console.log("\nRecommended model for general tasks: openai/gpt-oss-120b");
       } else {
         console.error("Failed to parse models. API Response:", parsed);
       }
